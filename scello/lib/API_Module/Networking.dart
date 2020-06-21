@@ -23,7 +23,6 @@ class networkingAPI {
 
     //API Call
     Future<http.Response> getJSON(String URL){
-
         return http.get(URL);
     }
 
