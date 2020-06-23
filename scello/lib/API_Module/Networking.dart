@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:scello/Data/FoodOBJ.dart';
 
 class networkingAPI {
     String baseURL = 'https://api.edamam.com/api/food-database/v2/parser?nutrition-type=logging';
@@ -13,32 +14,36 @@ class networkingAPI {
     networkingAPI();
 
     //Query Builder
-    String buildURL(String query){
+    String buildFoodURL(String query){
         String prependQuery = 'ingr=';
         String URL = baseURL + "&" + prependQuery + query + "&" + appID + "&" + key ;
         debugPrint(URL);
-
         return URL;
     }
 
     //API Call
-    Future<http.Response> getJSON(String URL){
+    Future<http.Response> getFoodJSON(String URL){
         return http.get(URL);
     }
 
     //API Callback
 
-    //JSON Parse
+    //JSON Parse food Response
     buildFoodObj(String foodJSONdata){
 
     }
 
-    controller(String query) async {
-        String URL = buildURL(query);
-        http.Response res = await getJSON(URL);
-        String temp = res.body;
+    //JSON Parse Nutrition Response
+    buildNutritionObj(String nutritionJSONdata){
 
-        debugPrint(temp);
+    }
+
+    controller(String query) async {
+        String URL = buildFoodURL(query);
+        http.Response res = await getFoodJSON(URL);
+        String temp = res.body;
+        //debugPrint(temp);
+        FoodOBJs tempOBJ = FoodOBJs.fromJson(res.body);
     }
 
 }
