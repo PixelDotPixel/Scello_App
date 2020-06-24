@@ -4,17 +4,21 @@ import 'package:flutter/cupertino.dart';
 
 class FoodOBJs {
     String text;
-    List<hintsOBJ> parsed;
-    List<hintsOBJ> hints;
+    List<hintsOBJ> parsed = [];
+    List<hintsOBJ> hints = [];
 
     FoodOBJs.fromJson(String jsonString) {
         final _map = jsonDecode(jsonString);
         this.text = _map['text'];
         //this.parsed = _map[''];
         final _parsedList = _map['hints'];
-        hintsOBJ temp = hintsOBJ.fromJson(_parsedList[0]);
-
-        debugPrint("PRCNT: "+temp.food.nutrients.PROCNT.toString());
+        if(_parsedList.length != 0){
+            hintsOBJ temp = hintsOBJ.fromJson(_parsedList[0]);
+            this.hints.add(temp);
+        } else {
+            this.text = "EMPTY RESULT";
+            return;
+        }
     }
 }
 
