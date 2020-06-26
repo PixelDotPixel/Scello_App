@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';
 
 class NutritionOBJ {
+    String foodName;
     int yield;
     int calories;
     int glycemicIndex;
@@ -14,8 +15,9 @@ class NutritionOBJ {
     TotalNutriants totalNutriants;
     TotalDaily totalDaily;
 
-    NutritionOBJ.fromJson(String jsonString){
+    NutritionOBJ.fromJson(String jsonString, String name){
         final _map = jsonDecode(jsonString);
+        this.foodName = name;
         this.totalNutriants = TotalNutriants.fromJson(_map['totalNutrients']);
     }
 }

@@ -64,8 +64,8 @@ class networkingAPI {
     }
 
     //JSON Parse Nutrition Response
-    NutritionOBJ buildNutritionObj(String nutritionJSONdata){
-        NutritionOBJ nutritionOBJ = NutritionOBJ.fromJson(nutritionJSONdata);
+    NutritionOBJ buildNutritionObj(String nutritionJSONdata, String query){
+        NutritionOBJ nutritionOBJ = NutritionOBJ.fromJson(nutritionJSONdata, query);
         return nutritionOBJ;
     }
 
@@ -73,13 +73,13 @@ class networkingAPI {
         return toFormat.replaceAll(" ", "%20");
     }
 
-    controller(String unformattedQuery) async {
+    Future<NutritionOBJ> controller(String unformattedQuery) async {
         String query;
 
         //Validity check for query
         if(unformattedQuery == ""){
             debugPrint("Empty Query");
-            return;
+            return null;
         }
 
         //Format query to URL standards (replace spaces etc)
@@ -96,14 +96,15 @@ class networkingAPI {
         //check if the first query came up empty
         if(foodOBJ.text == "EMPTY RESULT"){
             debugPrint("Empty Search Result");
-            return;
+            return null;
         }
 
         //Second query for getting the nutritional information of that food item
         String nutrURL = buildNutritionURL(query);
         http.Response nutres = await getNutritionJSON(nutrURL, foodOBJ.hints[0].food.foodId);
-        NutritionOBJ nutritionOBJ = buildNutritionObj(nutres.body);
+        NutritionOBJ nutritionOBJ = buildNutritionObj(nutres.body, query);
 
+        return nutritionOBJ;
         //Debugging Code
 //        debugPrint("=====NTUR====");
 //        for(int i = 0; i < nutritionOBJ.totalNutriants.categoriesOBJS.length; i++){
