@@ -115,13 +115,15 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: ListView(
             children: getNewBody(nutritionOBJ),
-          )
+
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: _apiCall,
           tooltip: 'Increment',
           child: Icon(Icons.add),
         ),
+        backgroundColor: Colors.green,
       );
     } else {
       return Scaffold(
