@@ -77,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         Widget nutritionTile = new Container(
             child: new Card(
+              elevation: 5,
               child: new Material(
                 child: new InkWell(
                   //onTap: () => _onTileClicked(),
